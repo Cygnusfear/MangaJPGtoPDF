@@ -1,8 +1,17 @@
-ShingekiNoKyojin - JPGtoPDF
+Manga JPGtoPDF
 ===========================
 
-Converts Manga JPGs from [MangaFreak](http://www1.mangafreak.net/Manga/Shingeki_No_Kyojin) to a PDF.
+Converts Manga JPGs PDF. Spreads are automatically rotated to landscape orientation. Sorts by 000 numbering.
 
+Usage:
 
-Rename the folder with all the images downloaded from MangaFreak into a folder called `images/` in the project directory and run `python main.py`
+run `python main.py {image directory}`
 
+Extra:
+
+- Rename cover file to 'cover.jpg'
+
+Credits for the original go to:
+
+ShingekiNoKyojin - JPGtoPDF
+https://github.com/GiriB/MangaJPGtoPDF

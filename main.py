@@ -5,7 +5,11 @@ import sys
 
 print sys.argv
 
-f = []
+dir = 'images'
+
+if len(sys.argv) > 1:
+    dir = sys.argv[1]
+
 for (dirpath, dirnames, filenames) in walk('./'+sys.argv[1]):
     # if on MAC, rmeove .DS_Store file
     if '.DS_Store' in filenames:
