@@ -2,6 +2,7 @@ import struct
 import imghdr
 from fpdf import FPDF
 
+
 def get_image_size(fname):
     '''Determine the image type of fhandle and return its size.
     from draco'''
@@ -18,7 +19,7 @@ def get_image_size(fname):
             width, height = struct.unpack('<HH', head[6:10])
         elif imghdr.what(fname) == 'jpeg':
             try:
-                fhandle.seek(0) # Read 0xff next
+                fhandle.seek(0)  # Read 0xff next
                 size = 2
                 ftype = 0
                 while not 0xc0 <= ftype <= 0xcf:
@@ -31,7 +32,7 @@ def get_image_size(fname):
                 # We are at a SOFn block
                 fhandle.seek(1, 1)  # Skip `precision' byte.
                 height, width = struct.unpack('>HH', fhandle.read(4))
-            except Exception: #IGNORE:W0703
+            except Exception:  # IGNORE:W0703
                 return
         else:
             return
@@ -42,11 +43,17 @@ def get_image_size(fname):
 # >>> pdf.image('2.jpg',0,0,210,297)
 # >>> pdf.output('hello5.pdf',"F")
 
-def make_pdf(filename,imagelist):
-    pdf = FPDF()
+
+def make_pdf(filename, imagelist):
+    pdf = FPDF('P', 'mm', (210, 297))
     # imagelist is the list with all image filenames
     for imagename in imagelist:
-        pdf.add_page()
-        pdf.image(imagename,0,0,210,297)
+        size = get_image_size(imagename)
+        # print size
+        if size[0] < size[1]:
+            pdf.add_page('P')
+            pdf.image(imagename, 0, 0, 210, 297)
+        else:
+            pdf.add_page('L')
+            pdf.image(imagename, 0, 0, 297, 210)
     pdf.output(filename+".pdf", "F")
-
